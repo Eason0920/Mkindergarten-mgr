@@ -1,0 +1,20 @@
+﻿<div class="row" ng-controller="loginCtrl">
+    <div cg-busy="isProcessing"></div>
+    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8" style="margin: 10% auto 10% auto; float: none;">
+        <h2 style="text-align: center; font-weight: bold;">請登入</h2><br />
+        <form ng-submit="loginSubmit()">
+            <div class="form-group">
+                <input type="text" class="form-control input-lg" placeholder="帳號" style="max-width: 100%;"
+                       ng-model="loginModel.acn" focus-me="true" required />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control input-lg" placeholder="密碼" style="max-width: 100%;"
+                       ng-model="loginModel.pwd" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+

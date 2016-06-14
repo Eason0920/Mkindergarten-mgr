@@ -1,0 +1,40 @@
+﻿<div class="row" ng-controller="indexCtrl">
+    <div class="col-md-2">
+        <div style="margin-bottom: 15px;">
+            <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+            <span class="lead" style="font-weight: bold;">
+                網站介面管理
+            </span>
+        </div>
+        <div class="list-group">
+            <a href="javascript:;" class="list-group-item" ng-class="{active: includeHtml === 'Html/slider-setting.html' && !isLogout}"
+               ng-click="menuClick('Html/slider-setting.html')">輪播圖片設定</a>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+            <span class="lead" style="font-weight: bold;">
+                園所管理
+            </span>
+        </div>
+        <div class="list-group">
+            <a href="javascript:;" class="list-group-item" ng-class="{active: includeHtml === 'Html/company-setting.html' && !isLogout}"
+               ng-click="menuClick('Html/company-setting.html')">園所資訊維護</a>
+            <a href="javascript:;" class="list-group-item" ng-class="{active: includeHtml === 'Html/job-setting.html' && !isLogout}"
+               ng-click="menuClick('Html/job-setting.html')">園所職缺維護</a>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+            <span class="lead" style="font-weight: bold;">
+                系統管理
+            </span>
+        </div>
+        <div class="list-group">
+            <a href="javascript:;" class="list-group-item" ng-class="{active: isLogout}"
+               ng-click="logoutClick()">登出</a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div ng-include="includeHtml"></div>
+    </div>
+</div>
+

@@ -1,0 +1,90 @@
+﻿<div ng-controller="jobSettingCtrl">
+    <div>
+        <h1 class="page-header" style="text-align: right;">園所職缺維護</h1>
+        <div cg-busy="isProcessing"></div>
+    </div>
+    <div>
+        <form ng-submit="addCompanyJob()">
+            <div class="row vAlignMiddle">
+                <div class="form-group col-md-2">
+                    <label>縣市</label>
+                    <select class="form-control" ng-options="city.id as city.name for city in allCitys | filter: excludeAllCityOption"
+                            ng-model="addCompanyJobObj.city_id" ng-change="getCompanysByCity(1)"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>園所</label><require-star></require-star>
+                    <select class="form-control" ng-options="company.company_id as company.name for company in companyList"
+                            ng-model="addCompanyJobObj.company_id" ng-change="getJobKindsByCompany()" required></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>職缺</label><require-star></require-star>
+                    <select class="form-control" ng-options="jobKind.job_kind_id as jobKind.job_kind_name for jobKind in allJobKindsByCompany"
+                            ng-model="addCompanyJobObj.job_kind_id" required></select>
+                    <div style="color: #666; font-size: 12px; margin-top: 5px;">※ 此選單僅列出該園所尚未新增的職缺</div>
+                </div>
+                <div class="form-group col-md-1" style="margin-top: 25px;">
+                    <button type="submit" class="btn btn-success">新增職缺</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <hr />
+    <!--查詢區塊 begin-->
+    <div class="row vAlignMiddle">
+        <div class="form-group col-md-2">
+            <label>縣市</label>
+            <select class="form-control" ng-options="city.id as city.name for city in allCitys"
+                    ng-model="queryCompanyJobObj.city_id" ng-change="getCompanysByCity(2)"></select>
+        </div>
+        <div class="form-group col-md-3">
+            <label>園所</label>
+            <select class="form-control" ng-options="company.company_id as company.name for company in queryCompanyList"
+                    ng-model="queryCompanyJobObj.company_id"></select>
+        </div>
+        <div class="col-md-1" style="margin-top: 24px;">
+            <button type="button" class="btn btn-default" ng-click="curModifyCompanyJobId = 0; getAllCompanyJobList()">查詢</button>
+        </div>
+        <!--分頁標籤 begin-->
+        <div class="col-md-6">
+            <paging-component-directive></paging-component-directive>
+        </div>
+        <!--分頁標籤 end-->
+    </div>
+    <!--查詢區塊 end-->
+    <!--資料表格 begin-->
+    <div style="margin-top: 10px;">
+        <table class="table table-striped table-hover table-bordered">
+            <thead style="background-color: #edf4ff;">
+                <tr>
+                    <th width="15%">職缺</th>
+                    <th>園所</th>
+                    <th>地址</th>
+                    <th width="15%">電話</th>
+                    <th class="text-center" width="10%">編輯</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="companyJob in companyJobsList track by companyJob.job_id" ng-class="{danger: curModifyCompanyJobId === companyJob.job_id}">
+                    <td class="vAlignMiddle">{{companyJob.job_kind_name}}</td>
+                    <td class="vAlignMiddle">{{companyJob.company_name}}</td>
+                    <td class="vAlignMiddle">{{companyJob.company_address}}</td>
+                    <td class="vAlignMiddle">{{companyJob.company_tel}}</td>
+                    <td class="text-center vAlignMiddle">
+                        <!--<button class="btn btn-danger" ng-click="deleteCompanyJob($index)" title="刪除職缺" alt="刪除職缺">刪除</button>-->
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteCompanyJob($index)" title="刪除職缺" alt="刪除職缺">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                <!--<tr ng-if="avDatas.length == 0">
+                    <th colspan="4" style="text-align: center;">查無資料</th>
+                </tr>-->
+            </tbody>
+        </table>
+    </div>
+    <!--資料表格 end-->
+    <!--分頁標籤 begin-->
+    <paging-component-directive></paging-component-directive>
+    <!--分頁標籤 end-->
+</div>

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.backStageTitle = Resources.Public.BackStageTitle;       //後台網站標題
+    ViewBag.receptionUrl = Resources.Public.ReceptionUrl;       //前台網址
+
+    //應用程式根路徑
+    ViewBag.applicationPath = Request.ApplicationPath;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<base href="@ViewBag.applicationPath/" />*@
+    <base href="@(string.Concat(ViewBag.applicationPath, (ViewBag.applicationPath.Equals("/")) ? string.Empty : "/"))" />
+    <title>@ViewBag.backStageTitle</title>
+    <link rel="Shortcut Icon" type="image/ico" href="Images/ico.ico" />
+    @Styles.Render("~/Content/style")
+</head>
+<body ng-app="app">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #ffa919; border-color: #ffa919;">
+        <div class="container">
+            <div class="navbar-header">
+                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>*@
+                @*@Html.ActionLink("萌學園總部", "Index", "Index", new { area = "" }, new { @class = "navbar-brand" })*@
+                <a href="@ViewBag.receptionUrl" target="_blank" class="navbar-brand" style="padding: 0;">
+                    <img src="Images/topper-logo_01.png" title="前往萌學園首頁" alt="前往萌學園首頁">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content" style="padding-top: 50px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 東森電視事業股份有限公司</p>
+        </footer>
+    </div>
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="http://maps.googleapis.com/maps/api/js?v=3"></script>
+
+    @Scripts.Render("~/bundles/public")
+    @Scripts.Render("~/bundles/project")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

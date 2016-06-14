@@ -1,0 +1,81 @@
+﻿<div ng-controller="sliderSettingCtrl">
+    <div>
+        <h1 class="page-header" style="text-align: right;">輪播圖片設定</h1>
+        <div cg-busy="isProcessing"></div>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-success" ngf-pattern="image/*" accept="image/*" ng-disabled="isEditing"
+                ngf-validate="{width: {min: {{sliderList.recommand_image_width}}, max:{{sliderList.recommand_image_width}}},height: {min: {{sliderList.recommand_image_height}}, max: {{sliderList.recommand_image_height}}}}"
+                ngf-select="checkSliderImage($file, $invalidFiles)">
+            新增圖片
+        </button>
+        <span style="color: #666; font-size: 12px; margin-left: 5px;">※ 建議圖片尺寸為 {{sliderList.recommand_image_width}} * {{sliderList.recommand_image_height}} 以達最佳瀏覽效果</span>
+    </div>
+    <hr />
+    <div class="col-lg-12" style="color: #666; font-size: 12px;">
+        <div>※ 修改資料時 <require-star></require-star> 為必填欄位</div>
+        <div>※ 播放序號優先度 <b style="color: red; vertical-align: middle;">1</b> 為最高優先，以此類推</div>
+    </div>
+    <hr />
+    <div class="col-lg-12" style="color: #666; font-size: 12px; margin-top: 20px;">
+        <div>※ 目前已啟用的輪播圖片數量： <b style="color: red; vertical-align: middle;">{{isOnCount}}</b></div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-xs-6 thumb" ng-repeat="slider in sliderList.sliders track by slider.id" style="margin-top: 20px;">
+        <form ng-submit="updateSlider($index)">
+            <div class="thumbnail" ng-style="{'background-color': ((slider.is_on === 1) ? '#ffcfc8' : '#f9f9f9')}">
+                <img class="img-responsive" ng-src="{{slider.image}}" />
+                <div class="checkbox col-lg-4 col-md-4 col-xs-6">
+                    <label style="font-weight: bold;">
+                        <input type="checkbox" class="bigCheckbox" ng-model="slider.is_on" ng-true-value="1" ng-false-value="0"
+                               ng-change="checkDataHasChange($index)" ng-disabled="currentEditId !== slider.id" />啟用
+                    </label>
+                </div>
+                <div class="floatR" style="margin-top: 6px; width: 30%;">
+                    <input class="form-control" type="number" min="1" max="99" ng-model="slider.sort" ng-required="slider.is_on === 1"
+                           ng-change="checkDataHasChange($index)" ng-disabled="currentEditId !== slider.id" />
+                </div>
+                <div class="form-group" style="clear: both;">
+                    <label>提示文字</label>
+                    <input class="form-control" type="text" maxlength="45" ng-model="slider.title"
+                           ng-change="checkDataHasChange($index)" ng-disabled="currentEditId !== slider.id" />
+                </div>
+                <div class="form-group">
+                    <label>連結網址</label>
+                    <input class="form-control" type="text" ng-model="slider.link"
+                           ng-change="checkDataHasChange($index)" ng-disabled="currentEditId !== slider.id" />
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-6 col-md-6 col-xs-6">
+                        <label>上架日期</label>
+                        <input class="form-control" type="text" maxlength="10" ng-model="slider.begin_date" ng-change="checkDataHasChange($index)"
+                               date-time-picker="dateTimePickerParams" ng-disabled="currentEditId !== slider.id" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-6">
+                        <label>下架日期</label>
+                        <input class="form-control" type="text" maxlength="10" ng-model="slider.end_date" ng-change="checkDataHasChange($index)"
+                               date-time-picker="dateTimePickerParams" ng-disabled="currentEditId !== slider.id" />
+                    </div>
+                </div>
+                <div class="overflowHide">
+                    <button type="button" class="btn btn-primary btn-sm" title="修改輪播資訊" alt="修改輪播資訊" ng-click="openEdit($index)"
+                            ng-show="currentEditId !== slider.id" ng-class="{invisible: isEditing}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm" title="確認儲存" alt="確認儲存"
+                            ng-show="currentEditId === slider.id" ng-disabled="!slider.modify">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <span style="color: #f00; font-size: 12px; text-align: center;" ng-show="slider.modify">已修改資料未儲存</span>
+                    <button type="button" class="btn btn-danger btn-sm floatR" ng-click="deleteSlider($index)" title="刪除輪播資訊" alt="刪除輪播資訊"
+                            ng-show="currentEditId !== slider.id" ng-class="{invisible: isEditing}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm floatR" title="放棄返回" alt="放棄返回"
+                            ng-click="cancelEdit($index)" ng-show="currentEditId === slider.id">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

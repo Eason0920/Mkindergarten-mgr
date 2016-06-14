@@ -1,0 +1,30 @@
+﻿.thumb {
+    margin-bottom: 30px;
+}
+
+.bigCheckbox {
+    width: 15px;
+    height: 15px;
+}
+
+.floatR {
+    float: right;
+}
+
+.minWidth100 {
+    min-width: 100%;
+}
+
+.vAlignMiddle {
+    vertical-align: middle !important;
+}
+
+.liFloatLDiscNone {
+    float: left;
+    list-style: none;
+}
+
+.overflowHide {
+    overflow: hidden;
+    clear: both;
+}
